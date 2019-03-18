@@ -24,6 +24,8 @@ class Counter extends Component {
       case 'sub':
         this.setState((prevState) => { return { counter: prevState.counter - value } })
         break;
+      default:
+        return;
     }
   }
 
@@ -40,7 +42,7 @@ class Counter extends Component {
         <ul>
           { this.props.storedResults.map(strResult => (
             <li key={ strResult.id } onClick={ () => this.props.onDeleteResult(strResult.id) }>
-              { strResult.value }
+              { strResult.value + ' (x2)' }
             </li>
           )) }
         </ul>
