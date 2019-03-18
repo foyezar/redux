@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import {
   createStore,
   combineReducers,
-  applyMiddleware
+  applyMiddleware,
+  compose
 } from 'redux';
 
 import counterReducer from './store/reducers/counter';
@@ -18,6 +19,10 @@ const rootReducer = combineReducers({
   res: resultReducer
 });
 
+// DevTool Setup
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// Middleware
 const logger = store => next => action => {
   console.log('[Middleware] Dispatching', action);
   const result = next(action);
@@ -25,7 +30,7 @@ const logger = store => next => action => {
   return result;
 }
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger)));
 
 ReactDOM.render(
   <Provider store={ store }>
